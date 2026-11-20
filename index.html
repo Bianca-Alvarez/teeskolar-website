@@ -9,7 +9,7 @@
 </head>
 <body>
 
-  <!-- Header -->
+  
   <header>
     <div class="brand-header" onclick="navigateTo('home')" style="cursor: pointer;">
       <img src="images/logo.png" alt="TEESKOLAR Logo" class="brand-logo" />
@@ -44,7 +44,8 @@
   </header>
 
   <main>
-    <!-- 1. HOME PAGE VIEW -->
+
+    
     <section id="page-home" class="page-section active">
       <div class="hero-wrapper">
         <span class="star-decor star-left">★</span>
@@ -58,18 +59,19 @@
       <div class="product-grid" id="homeProductGrid"></div>
     </section>
 
-    <!-- 2. SHOP PAGE VIEW -->
+
+    
     <section id="page-shop" class="page-section">
       <div id="shopVerticalList" class="shop-vertical-list"></div>
     </section>
 
-    <!-- 3. SINGLE PRODUCT DETAIL VIEW -->
+    
     <section id="page-detail" class="page-section">
       <button class="back-btn" onclick="navigateTo('home')">← Back to Home</button>
       <div id="singleProductContainer"></div>
     </section>
 
-    <!-- 4. ABOUT / TERMS OF SERVICE VIEW -->
+    
     <section id="page-terms" class="page-section">
       <h2 class="terms-title">Terms of Service</h2>
       <div class="terms-grid">
@@ -117,11 +119,12 @@
       </div>
     </section>
 
-    <!-- 5. PRIVACY POLICY VIEW -->
+    
     <section id="page-privacy" class="page-section">
       <h2 class="terms-title">Privacy Policy</h2>
       <div class="terms-grid">
-        <!-- Left Column: Items 1 to 3 -->
+
+        
         <div class="terms-col">
           <p><strong>1. Introduction</strong><br>
           Welcome to TEESKOLAR. We respect your privacy and are committed to protecting it. This Privacy Policy explains what information we collect when you visit our website and how we use it. This policy complies with the Philippine Data Privacy Act of 2012.<br>
@@ -140,7 +143,8 @@
           We do not sell, rent, or trade your personal data to third parties.</p>
         </div>
 
-        <!-- Right Column: Items 4 to 9 -->
+
+        
         <div class="terms-col">
           <p><strong>4. Cookies</strong><br>
           Our website uses cookies to remember your preferences and keep the site running smoothly. You can disable cookies in your browser settings, but some parts of the site may not work properly.</p>
@@ -168,7 +172,8 @@
       </div>
     </section>
 
-    <!-- 6. CONTACT US VIEW -->
+
+    
     <section id="page-contact" class="page-section">
       <div class="contact-header">
         <h2>CONTACT US</h2>
@@ -228,7 +233,8 @@
     </section>
   </main>
 
-  <!-- Order Request Modal -->
+
+  
   <div id="orderModal" class="modal-overlay" onclick="closeModalOnOutside(event)">
     <div class="modal-card">
       <button class="close-modal" onclick="closeOrderModal()">✕</button>
@@ -261,7 +267,8 @@
     </div>
   </div>
 
-  <!-- Toast Notification -->
+
+  
   <div id="toast" class="toast"></div>
 
   <footer>
