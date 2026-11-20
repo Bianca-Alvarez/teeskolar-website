@@ -35,7 +35,6 @@ const products = [
 const itemQuantities = { 1: 1, 2: 1, 3: 1 };
 let activeOrderSummary = "";
 
-// Build the arched card HTML (shared across Home, Shop, and Product Detail)
 function buildArchCardHTML(item, clickable = true) {
   const clickAttr = clickable ? `onclick="openProductDetail(${item.id})"` : "";
   return `
@@ -55,7 +54,6 @@ function buildArchCardHTML(item, clickable = true) {
   `;
 }
 
-// Build the Figma 2-column row (used in Shop & Single Product View)
 function buildShopRowHTML(item, prefix) {
   const qty = itemQuantities[item.id] || 1;
   return `
@@ -108,7 +106,7 @@ function renderAllViews(list = products) {
   }
 }
 
-// Open Single Product View (matches bottom Figma wireframe)
+// Open Single Product View 
 function openProductDetail(productId) {
   const item = products.find(p => p.id === productId);
   if (!item) return;
