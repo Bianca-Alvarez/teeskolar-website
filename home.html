@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TEESKOLAR - Wearing a brighter future</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="brand-header">
+      <img src="images/logo.png" alt="TEESKOLAR Logo" class="brand-logo" />
+      <div class="brand-title">
+        <h1>TEESKOLAR</h1>
+        <p>Wearing a brighter future</p>
+      </div>
+    </div>
+
+    <nav>
+      <div class="nav-item">
+        <span class="nav-icon">🏠</span>
+        <a href="index.html" class="nav-btn active">Home</a>
+      </div>
+      <div class="nav-item">
+        <span class="nav-icon">🛒</span>
+        <a href="shop.html" class="nav-btn">Shop</a>
+      </div>
+      <div class="nav-item">
+        <span class="nav-icon">ⓘ</span>
+        <a href="about.html" class="nav-btn">About</a>
+      </div>
+      <div class="nav-item">
+        <span class="nav-icon">✉</span>
+        <a href="contact.html" class="nav-btn">Contact Us</a>
+      </div>
+      <div class="search-wrapper">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="searchInput" placeholder="Search..." onkeyup="filterHomeProducts()" />
+      </div>
+    </nav>
+  </header>
+
+  <!-- Main Home Content -->
+  <main>
+    <div class="hero-wrapper">
+      <span class="star-decor star-left">★</span>
+      <div class="hero-banner">
+        <p>TEESKOLAR offers a variety of styles ranging from street to semi-casual<br>inspired by scholars, made for scholars.</p>
+      </div>
+      <span class="star-decor star-right">★</span>
+    </div>
+
+    <h2 class="section-title">Product For Sale</h2>
+    <div class="product-grid" id="homeProductGrid"></div>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <p>All rights reserved. TEESKOLAR 2026.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
