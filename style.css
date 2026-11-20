@@ -613,7 +613,7 @@ main {
 
 footer {
   background-color: var(--teal-main);
-  color: var(--gold-star);
+  color: var(--white);
   text-align: center;
   padding: 10px;
   font-size: 0.82rem;
