@@ -9,7 +9,7 @@
 </head>
 <body>
 
-  <!-- Header matching Figma -->
+  <!-- Header -->
   <header>
     <div class="brand-header" onclick="navigateTo('home')" style="cursor: pointer;">
       <img src="images/logo.png" alt="TEESKOLAR Logo" class="brand-logo" />
@@ -58,18 +58,18 @@
       <div class="product-grid" id="homeProductGrid"></div>
     </section>
 
-    <!-- 2. SHOP PAGE VIEW (Vertical list matching Figma Shop wireframe) -->
+    <!-- 2. SHOP PAGE VIEW  -->
     <section id="page-shop" class="page-section">
       <div id="shopVerticalList" class="shop-vertical-list"></div>
     </section>
 
-    <!-- 3. SINGLE PRODUCT DETAIL VIEW (Matches bottom Figma frame) -->
+    <!-- 3. SINGLE PRODUCT DETAIL VIEW  -->
     <section id="page-detail" class="page-section">
       <button class="back-btn" onclick="navigateTo('home')">← Back to Home</button>
       <div id="singleProductContainer"></div>
     </section>
 
-    <!-- 4. ABOUT / TERMS OF SERVICE VIEW (Matches top Figma frame) -->
+    <!-- 4. ABOUT / TERMS OF SERVICE VIEW -->
     <section id="page-terms" class="page-section">
       <h2 class="terms-title">Terms of Service</h2>
       <div class="terms-grid">
@@ -118,18 +118,27 @@
     </section>
 
     <!-- 5. PRIVACY POLICY VIEW -->
-    <section id="page-privacy" class="page-section">
-      <div class="privacy-box">
-        <h2 class="terms-title">Privacy Policy</h2>
-           <h3>1. Introduction</h3>
-        <p>Welcome to TEESKOLAR. We respect your privacy and are committed to protecting it. This Privacy Policy explains what information we collect when you visit and how we use it. This policy complies with the Philippine Data Privacy Act of 2012.</p>
-        <p><strong>TL;DR:</strong> We only collect what we need to process your orders and we don't sell your data.</p>
+    <section class="privacy-section">
+  <h2 class="privacy-title">Privacy Policy</h2>
 
+  <div class="privacy-columns">
+    <!-- Left Column: Items 1 to 3 -->
+    <div class="privacy-col">
+      <div class="policy-item">
+        <h3>1. Introduction</h3>
+        <p>Welcome to TEESKOLAR. We respect your privacy and are committed to protecting it. This Privacy Policy explains what information we collect when you visit our website and how we use it. This policy complies with the Philippine Data Privacy Act of 2012.</p>
+        <p>TL;DR: We only collect what we need to process your t-shirt order. We don't sell your data.</p>
+      </div>
+
+      <div class="policy-item">
         <h3>2. What Information We Collect</h3>
-        <p><strong>a) Information you give us:</strong> When you use our order form or contact form, we collect your name, email address, contact number, delivery address, t-shirt size, and quantity.</p>
-        <p><strong>b) Automatic information:</strong> We collect basic data like IP address, browser type, and pages visited through cookies to improve site performance.</p>
+        <p>a) Information you give us: When you use our contact form or order form, we collect your name, email address, contact number, shipping address, t-shirt size, and quantity.</p>
+        <p>b) Automatic information: We collect basic data like IP address, browser type, and pages visited through cookies to improve our site.</p>
+      </div>
 
+      <div class="policy-item">
         <h3>3. How We Use Your Information</h3>
+        <p>We use your information to:</p>
         <ul>
           <li>Process and confirm your orders and inquiries</li>
           <li>Communicate with you about your order status</li>
@@ -138,7 +147,42 @@
         </ul>
         <p>We do not sell, rent, or trade your personal data to third parties.</p>
       </div>
-    </section>
+    </div>
+
+    <!-- Right Column: Items 4 to 9 -->
+    <div class="privacy-col">
+      <div class="policy-item">
+        <h3>4. Cookies</h3>
+        <p>Our website uses cookies to remember your preferences and keep the site running smoothly. You can disable cookies in your browser settings, but some parts of the site may not work properly.</p>
+      </div>
+
+      <div class="policy-item">
+        <h3>5. How We Store Your Data</h3>
+        <p>Your data is stored securely and is only accessible to the TEESKOLAR team. We retain your order information for 2 years for accounting and support purposes, after which it is securely deleted.</p>
+      </div>
+
+      <div class="policy-item">
+        <h3>6. Your Rights</h3>
+        <p>You have the right to access, correct, or delete your personal data. If you wish to exercise these rights, contact us at <strong>support@teeskolar.com</strong>.</p>
+      </div>
+
+      <div class="policy-item">
+        <h3>7. Security</h3>
+        <p>We take reasonable measures to protect your data, but please note that no method of transmission over the internet is 100% secure.</p>
+      </div>
+
+      <div class="policy-item">
+        <h3>8. Children's Privacy</h3>
+        <p>Our website is not intended for children under 13. We do not knowingly collect data from children.</p>
+      </div>
+
+      <div class="policy-item">
+        <h3>9. Changes to This Policy</h3>
+        <p>We may update this policy from time to time. Changes will be posted on this page with a new "Last Updated" date.</p>
+      </div>
+    </div>
+  </div>
+  </section>
 
     <!-- 6. CONTACT US VIEW -->
     <section id="page-contact" class="page-section">
