@@ -55,7 +55,7 @@ function buildArchCardHTML(item, clickable = true) {
   `;
 }
 
-// Build the Figma 2-column row (used in Shop & Single Product View)
+// Build the 2-column row (used in Shop & Single Product View)
 function buildShopRowHTML(item, prefix) {
   const qty = itemQuantities[item.id] || 1;
   return `
@@ -88,7 +88,7 @@ function buildShopRowHTML(item, prefix) {
         </div>
 
         <button type="button" class="order-action-btn" onclick="triggerOrderModal(${item.id}, '${prefix}')">
-          Order Button
+          Order Now
         </button>
       </div>
     </div>
@@ -108,7 +108,7 @@ function renderAllViews(list = products) {
   }
 }
 
-// Open Single Product View (matches bottom Figma wireframe)
+// Open Single Product View
 function openProductDetail(productId) {
   const item = products.find(p => p.id === productId);
   if (!item) return;
@@ -148,8 +148,9 @@ function closeModalOnOutside(event) {
 function submitOrder(event) {
   event.preventDefault();
   const buyer = document.getElementById("buyerName").value;
+  const email = document.getElementById("buyerEmail").value;
   closeOrderModal();
-  showToast(`Order request submitted for ${buyer}! (${activeOrderSummary})`);
+  showToast(`Order submitted for ${buyer}! Confirmation will be sent to ${email}.`);
   document.getElementById("orderForm").reset();
 }
 
