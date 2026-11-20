@@ -31,7 +31,8 @@ const products = [
   }
 ];
 
-// Track selected quantities per shirt
+
+
 const itemQuantities = { 1: 1, 2: 1, 3: 1 };
 let activeOrderSummary = "";
 
@@ -93,7 +94,8 @@ function buildShopRowHTML(item, prefix) {
   `;
 }
 
-// Render Home & Shop
+
+
 function renderAllViews(list = products) {
   const homeGrid = document.getElementById("homeProductGrid");
   const shopList = document.getElementById("shopVerticalList");
@@ -106,7 +108,8 @@ function renderAllViews(list = products) {
   }
 }
 
-// Open Single Product View 
+
+
 function openProductDetail(productId) {
   const item = products.find(p => p.id === productId);
   if (!item) return;
@@ -115,14 +118,15 @@ function openProductDetail(productId) {
   navigateTo("detail");
 }
 
-// Quantity Stepper
+
+
 function updateItemQty(productId, delta, prefix) {
   itemQuantities[productId] = Math.max(1, (itemQuantities[productId] || 1) + delta);
   const qtyEl = document.getElementById(`${prefix}-qty-${productId}`);
   if (qtyEl) qtyEl.textContent = itemQuantities[productId];
 }
 
-// Open Order Modal with chosen size, color, quantity & total
+
 function triggerOrderModal(productId, prefix) {
   const item = products.find(p => p.id === productId);
   const size = document.getElementById(`${prefix}-size-${productId}`).value;
@@ -151,7 +155,7 @@ function submitOrder(event) {
   document.getElementById("orderForm").reset();
 }
 
-// Navigation
+
 function navigateTo(pageId) {
   document.querySelectorAll(".page-section").forEach(sec => sec.classList.remove("active"));
   document.getElementById(`page-${pageId}`).classList.add("active");
@@ -162,7 +166,7 @@ function navigateTo(pageId) {
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
-// Search Filter
+
 function filterProducts() {
   const query = document.getElementById("searchInput").value.toLowerCase();
   const filtered = products.filter(p =>
@@ -171,7 +175,7 @@ function filterProducts() {
   renderAllViews(filtered);
 }
 
-// Contact Form
+
 function handleContactSubmit(event) {
   event.preventDefault();
   const name = document.getElementById("contactName").value;
@@ -186,5 +190,5 @@ function showToast(message) {
   setTimeout(() => toast.classList.remove("show"), 4500);
 }
 
-// Initialize
+
 renderAllViews();
