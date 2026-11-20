@@ -1,620 +1,192 @@
-:root {
-  --bg-pink: #f8e2e2;
-  --teal-main: #005678;
-  --teal-dark: #00425c;
-  --gold-star: #ffde59;
-  --white: #ffffff;
-  --text-dark: #111111;
+const products = [
+  {
+    id: 1,
+    name: "Don't Be Late",
+    style: "(Semi-Ringer Tee)",
+    sizes: ["S", "M", "L", "XL"],
+    colors: ["Maroon"],
+    price: 399,
+    image: "images/shirt1.png",
+    description: "Maroon semi-ringer tee featuring a classic coffee cup graphic inspired by early-morning UP Diliman classes. Made with breathable cotton blend for everyday campus wear."
+  },
+  {
+    id: 2,
+    name: "Everyday Comfort",
+    style: "(Crew Neck T-Shirt)",
+    sizes: ["S", "M", "L", "XL"],
+    colors: ["Sunset Tie-Dye"],
+    price: 349,
+    image: "images/shirt2.png",
+    description: "Soft sunset-gradient crew neck t-shirt built for maximum comfort during long library study sessions and casual campus walks."
+  },
+  {
+    id: 3,
+    name: "Do Good Work",
+    style: "(Baggy T-Shirt)",
+    sizes: ["S", "M", "L", "XL"],
+    colors: ["Pastel Yellow"],
+    price: 449,
+    image: "images/shirt3.png",
+    description: "Relaxed oversized pastel yellow t-shirt with a cheerful mascot reminder to keep doing good work every day."
+  }
+];
+
+// Track selected quantities per shirt
+const itemQuantities = { 1: 1, 2: 1, 3: 1 };
+let activeOrderSummary = "";
+
+// Build the arched card HTML (shared across Home, Shop, and Product Detail)
+function buildArchCardHTML(item, clickable = true) {
+  const clickAttr = clickable ? `onclick="openProductDetail(${item.id})"` : "";
+  return `
+    <div class="product-card-wrapper" ${clickAttr}>
+      <div class="arch-card">
+        <div class="arch-inner">
+          <img src="${item.image}" alt="${item.name}" />
+        </div>
+        <h3>${item.name}</h3>
+        <p>${item.style}</p>
+      </div>
+      <div class="card-pills">
+        <div class="pill">Size: ${item.sizes.join(", ")}</div>
+        <div class="pill">Price: ₱${item.price}</div>
+      </div>
+    </div>
+  `;
 }
 
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  font-family: 'Segoe UI', Inter, Arial, sans-serif;
+// Build the Figma 2-column row (used in Shop & Single Product View)
+function buildShopRowHTML(item, prefix) {
+  const qty = itemQuantities[item.id] || 1;
+  return `
+    <div class="shop-item-row">
+      ${buildArchCardHTML(item, false)}
+      <div class="shop-right-panel">
+        <div class="desc-box">
+          <strong>Product description:</strong><br>
+          ${item.description}
+        </div>
+
+        <div class="options-bar-row">
+          <div class="options-teal-box">
+            <span>Select size and color:</span>
+            <div class="select-group">
+              <select id="${prefix}-size-${item.id}">
+                ${item.sizes.map(s => `<option value="${s}">${s}</option>`).join("")}
+              </select>
+              <select id="${prefix}-color-${item.id}">
+                ${item.colors.map(c => `<option value="${c}">${c}</option>`).join("")}
+              </select>
+            </div>
+          </div>
+
+          <div class="qty-control">
+            <button type="button" class="qty-btn" onclick="updateItemQty(${item.id}, -1, '${prefix}')">−</button>
+            <span class="qty-display" id="${prefix}-qty-${item.id}">${qty}</span>
+            <button type="button" class="qty-btn" onclick="updateItemQty(${item.id}, 1, '${prefix}')">+</button>
+          </div>
+        </div>
+
+        <button type="button" class="order-action-btn" onclick="triggerOrderModal(${item.id}, '${prefix}')">
+          Order Button
+        </button>
+      </div>
+    </div>
+  `;
 }
 
-body {
-  background-color: var(--bg-pink);
-  color: var(--text-dark);
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-}
+// Render Home & Shop
+function renderAllViews(list = products) {
+  const homeGrid = document.getElementById("homeProductGrid");
+  const shopList = document.getElementById("shopVerticalList");
 
-/* Header */
-header {
-  padding: 18px 5% 14px;
-  max-width: 1020px;
-  width: 100%;
-  margin: 0 auto;
-}
-
-.brand-header {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 16px;
-  margin-bottom: 16px;
-}
-
-.brand-logo {
-  width: 82px;
-  height: 82px;
-  object-fit: contain;
-}
-
-.brand-title h1 {
-  font-size: 2.2rem;
-  font-weight: 800;
-  letter-spacing: 1.5px;
-  line-height: 1.1;
-}
-
-.brand-title p {
-  font-size: 1rem;
-  color: #222;
-}
-
-/* Navigation */
-nav {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 14px;
-  flex-wrap: wrap;
-}
-
-.nav-item {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
-
-.nav-icon {
-  background-color: var(--teal-main);
-  color: var(--white);
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.72rem;
-}
-
-.nav-btn {
-  background-color: var(--teal-main);
-  color: var(--white);
-  border: none;
-  padding: 6px 22px;
-  border-radius: 6px;
-  font-size: 0.85rem;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-.nav-btn:hover, .nav-btn.active {
-  background-color: var(--teal-dark);
-}
-
-.search-wrapper {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
-
-.search-icon {
-  background-color: var(--teal-main);
-  color: var(--white);
-  padding: 5px 8px;
-  border-radius: 4px;
-  font-size: 0.78rem;
-}
-
-.search-wrapper input {
-  padding: 5px 10px;
-  border: 1.5px solid #222;
-  border-radius: 4px;
-  background-color: var(--white);
-  width: 165px;
-}
-
-/* Main */
-main {
-  flex: 1;
-  max-width: 980px;
-  width: 92%;
-  margin: 10px auto 40px;
-}
-
-.page-section {
-  display: none;
-}
-
-.page-section.active {
-  display: block;
-}
-
-/* Hero Banner */
-.hero-wrapper {
-  position: relative;
-  margin: 12px 0 28px;
-}
-
-.hero-banner {
-  background-color: var(--teal-main);
-  color: var(--white);
-  text-align: center;
-  padding: 26px 55px;
-  font-size: 1.05rem;
-  line-height: 1.45;
-}
-
-.star-decor {
-  position: absolute;
-  color: var(--gold-star);
-  font-size: 4.2rem;
-  line-height: 1;
-  text-shadow: 2px 3px 6px rgba(0, 0, 0, 0.25);
-  user-select: none;
-}
-
-.star-left {
-  top: -16px;
-  left: -10px;
-  transform: rotate(-12deg);
-}
-
-.star-right {
-  bottom: -16px;
-  right: -10px;
-  transform: rotate(15deg);
-}
-
-/* Home Product Grid */
-.section-title {
-  font-size: 1.35rem;
-  font-weight: 800;
-  margin-bottom: 18px;
-}
-
-.product-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 28px;
-}
-
-.product-card-wrapper {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  cursor: pointer;
-  transition: transform 0.2s;
-}
-
-.product-card-wrapper:hover {
-  transform: translateY(-4px);
-}
-
-.arch-card {
-  width: 100%;
-  background-color: var(--teal-main);
-  border-radius: 150px 150px 0 0;
-  padding: 18px 18px 14px;
-  text-align: center;
-  color: var(--white);
-}
-
-.arch-inner {
-  background-color: #e6e6e6;
-  border-radius: 135px 135px 0 0;
-  height: 195px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 12px;
-  overflow: hidden;
-  padding: 8px;
-}
-
-.arch-inner img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-}
-
-.arch-card h3 {
-  font-size: 0.95rem;
-  font-weight: 700;
-}
-
-.arch-card p {
-  font-size: 0.82rem;
-}
-
-.card-pills {
-  display: flex;
-  gap: 10px;
-  width: 100%;
-  margin-top: 8px;
-}
-
-.pill {
-  flex: 1;
-  background-color: var(--teal-main);
-  color: var(--white);
-  text-align: center;
-  padding: 7px 6px;
-  border-radius: 6px;
-  font-size: 0.78rem;
-  font-weight: 600;
-}
-
-/* SHOP & SINGLE PRODUCT ROW LAYOUT (Matches your Figma bottom frame) */
-.shop-vertical-list {
-  display: flex;
-  flex-direction: column;
-  gap: 35px;
-}
-
-.shop-item-row {
-  display: grid;
-  grid-template-columns: 270px 1fr;
-  gap: 36px;
-  align-items: center;
-  padding-bottom: 28px;
-  border-bottom: 1px solid rgba(0, 86, 120, 0.2);
-}
-
-@media (max-width: 720px) {
-  .shop-item-row {
-    grid-template-columns: 1fr;
+  if (homeGrid) {
+    homeGrid.innerHTML = list.map(item => buildArchCardHTML(item, true)).join("");
+  }
+  if (shopList) {
+    shopList.innerHTML = list.map(item => buildShopRowHTML(item, "shop")).join("");
   }
 }
 
-.shop-right-panel {
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
+// Open Single Product View (matches bottom Figma wireframe)
+function openProductDetail(productId) {
+  const item = products.find(p => p.id === productId);
+  if (!item) return;
+
+  document.getElementById("singleProductContainer").innerHTML = buildShopRowHTML(item, "detail");
+  navigateTo("detail");
 }
 
-.desc-box {
-  background-color: var(--teal-main);
-  color: var(--white);
-  padding: 16px 20px;
-  font-size: 0.92rem;
-  line-height: 1.5;
-  border-radius: 2px;
+// Quantity Stepper
+function updateItemQty(productId, delta, prefix) {
+  itemQuantities[productId] = Math.max(1, (itemQuantities[productId] || 1) + delta);
+  const qtyEl = document.getElementById(`${prefix}-qty-${productId}`);
+  if (qtyEl) qtyEl.textContent = itemQuantities[productId];
 }
 
-.options-bar-row {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  flex-wrap: wrap;
+// Open Order Modal with chosen size, color, quantity & total
+function triggerOrderModal(productId, prefix) {
+  const item = products.find(p => p.id === productId);
+  const size = document.getElementById(`${prefix}-size-${productId}`).value;
+  const color = document.getElementById(`${prefix}-color-${productId}`).value;
+  const qty = itemQuantities[productId] || 1;
+  const total = item.price * qty;
+
+  activeOrderSummary = `${qty}x ${item.name} (${size}, ${color}) — Total: ₱${total}`;
+  document.getElementById("modalSummaryText").textContent = activeOrderSummary;
+  document.getElementById("orderModal").classList.add("open");
 }
 
-.options-teal-box {
-  flex: 1;
-  background-color: var(--teal-main);
-  color: var(--white);
-  padding: 12px 16px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  flex-wrap: wrap;
-  font-size: 0.85rem;
+function closeOrderModal() {
+  document.getElementById("orderModal").classList.remove("open");
 }
 
-.select-group {
-  display: flex;
-  gap: 8px;
+function closeModalOnOutside(event) {
+  if (event.target.id === "orderModal") closeOrderModal();
 }
 
-.select-group select {
-  padding: 4px 8px;
-  border-radius: 4px;
-  border: none;
-  font-weight: 600;
-  color: var(--text-dark);
+function submitOrder(event) {
+  event.preventDefault();
+  const buyer = document.getElementById("buyerName").value;
+  closeOrderModal();
+  showToast(`Order request submitted for ${buyer}! (${activeOrderSummary})`);
+  document.getElementById("orderForm").reset();
 }
 
-.qty-control {
-  display: flex;
-  align-items: center;
-  gap: 6px;
+// Navigation
+function navigateTo(pageId) {
+  document.querySelectorAll(".page-section").forEach(sec => sec.classList.remove("active"));
+  document.getElementById(`page-${pageId}`).classList.add("active");
+
+  document.querySelectorAll(".nav-btn").forEach(btn => {
+    btn.classList.toggle("active", btn.dataset.page === pageId);
+  });
+  window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
-.qty-btn {
-  width: 24px;
-  height: 24px;
-  background-color: var(--teal-main);
-  color: var(--white);
-  border: none;
-  font-weight: bold;
-  cursor: pointer;
-  border-radius: 3px;
+// Search Filter
+function filterProducts() {
+  const query = document.getElementById("searchInput").value.toLowerCase();
+  const filtered = products.filter(p =>
+    p.name.toLowerCase().includes(query) || p.style.toLowerCase().includes(query)
+  );
+  renderAllViews(filtered);
 }
 
-.qty-display {
-  background: var(--white);
-  border: 1px solid #888;
-  padding: 2px 10px;
-  font-weight: 700;
-  font-size: 0.9rem;
+// Contact Form
+function handleContactSubmit(event) {
+  event.preventDefault();
+  const name = document.getElementById("contactName").value;
+  showToast(`Thank you, ${name}! Your message has been sent to TEESKOLAR.`);
+  document.getElementById("contactForm").reset();
 }
 
-.order-action-btn {
-  align-self: center;
-  background-color: var(--teal-main);
-  color: var(--white);
-  border: none;
-  padding: 10px 44px;
-  border-radius: 6px;
-  font-size: 0.92rem;
-  font-weight: 700;
-  cursor: pointer;
+function showToast(message) {
+  const toast = document.getElementById("toast");
+  toast.textContent = message;
+  toast.classList.add("show");
+  setTimeout(() => toast.classList.remove("show"), 4500);
 }
 
-.order-action-btn:hover {
-  background-color: var(--teal-dark);
-}
-
-.back-btn {
-  background: none;
-  border: none;
-  color: var(--teal-main);
-  font-weight: 700;
-  cursor: pointer;
-  margin-bottom: 16px;
-  font-size: 0.95rem;
-}
-
-/* Terms of Service (2-column layout matching Figma) */
-.terms-title {
-  text-align: center;
-  font-size: 1.35rem;
-  margin-bottom: 18px;
-}
-
-.terms-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 28px;
-  font-size: 0.78rem;
-  line-height: 1.48;
-}
-
-@media (max-width: 720px) {
-  .terms-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-.terms-col p {
-  margin-bottom: 10px;
-}
-
-.terms-footer-links {
-  text-align: center;
-  margin-top: 20px;
-  font-size: 0.85rem;
-}
-
-.link-btn {
-  margin-top: 8px;
-  background-color: var(--teal-main);
-  color: var(--white);
-  border: none;
-  padding: 6px 16px;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 0.8rem;
-}
-
-/* Privacy Policy */
-.privacy-box {
-  max-width: 760px;
-  margin: 0 auto;
-  font-size: 0.9rem;
-  line-height: 1.55;
-}
-
-.privacy-box h3 {
-  margin: 14px 0 6px;
-}
-
-.privacy-box ul {
-  margin-left: 22px;
-  margin-bottom: 10px;
-}
-
-/* Contact Page */
-.contact-header {
-  text-align: center;
-  margin-bottom: 22px;
-}
-
-.contact-layout {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 35px;
-}
-
-@media (max-width: 720px) {
-  .contact-layout {
-    grid-template-columns: 1fr;
-  }
-}
-
-.contact-form {
-  display: flex;
-  flex-direction: column;
-}
-
-.contact-form label {
-  font-size: 0.85rem;
-  font-weight: 700;
-  margin: 8px 0 4px;
-}
-
-.contact-form input, .contact-form textarea {
-  padding: 8px;
-  border: 1px solid #bbb;
-  border-radius: 4px;
-  background: var(--white);
-}
-
-.send-btn {
-  margin-top: 12px;
-  width: 90px;
-  padding: 7px;
-  background-color: var(--teal-main);
-  color: var(--white);
-  border: none;
-  border-radius: 4px;
-  font-weight: 700;
-  cursor: pointer;
-}
-
-.map-box {
-  width: 100%;
-  height: 165px;
-  border: 1px solid #bbb;
-  margin: 8px 0 14px;
-}
-
-.map-box iframe {
-  width: 100%;
-  height: 100%;
-  border: none;
-}
-
-.info-block {
-  margin-bottom: 12px;
-  font-size: 0.9rem;
-}
-
-.social-row {
-  display: flex;
-  gap: 18px;
-  margin-top: 6px;
-}
-
-.social-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-}
-
-.social-badge {
-  background: #111;
-  color: var(--white);
-  width: 28px;
-  height: 28px;
-  border-radius: 5px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: bold;
-}
-
-/* Modal */
-.modal-overlay {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.55);
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-}
-
-.modal-overlay.open {
-  display: flex;
-}
-
-.modal-card {
-  background: var(--white);
-  padding: 24px;
-  border-radius: 8px;
-  width: 90%;
-  max-width: 410px;
-  position: relative;
-  border-top: 8px solid var(--teal-main);
-}
-
-.close-modal {
-  position: absolute;
-  top: 12px;
-  right: 14px;
-  background: none;
-  border: none;
-  font-size: 1.2rem;
-  cursor: pointer;
-}
-
-.modal-sub {
-  color: var(--teal-main);
-  font-weight: 700;
-  margin: 6px 0 14px;
-  font-size: 0.9rem;
-}
-
-.form-row {
-  margin-bottom: 12px;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  font-size: 0.85rem;
-  font-weight: 600;
-}
-
-.form-row input, .form-row select {
-  padding: 8px;
-  border: 1px solid #bbb;
-  border-radius: 5px;
-}
-
-.confirm-order-btn {
-  width: 100%;
-  padding: 10px;
-  background: var(--teal-main);
-  color: var(--white);
-  border: none;
-  border-radius: 6px;
-  font-weight: 700;
-  cursor: pointer;
-  margin-top: 6px;
-}
-
-/* Toast & Footer */
-.toast {
-  position: fixed;
-  bottom: 24px;
-  right: 24px;
-  background: var(--teal-dark);
-  color: var(--white);
-  padding: 12px 20px;
-  border-radius: 6px;
-  font-size: 0.9rem;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s;
-  z-index: 2000;
-}
-
-.toast.show {
-  opacity: 1;
-}
-
-footer {
-  background-color: var(--teal-main);
-  color: var(--gold-star);
-  text-align: center;
-  padding: 10px;
-  font-size: 0.82rem;
-}
+// Initialize
+renderAllViews();
