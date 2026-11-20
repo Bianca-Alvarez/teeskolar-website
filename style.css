@@ -1,0 +1,154 @@
+:root {
+  --bg-pink: #f8e4e4;
+  --teal-dark: #005b7f;
+  --teal-card: #00668c;
+  --white: #ffffff;
+  --text-dark: #1a1a1a;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  background-color: var(--bg-pink);
+  color: var(--text-dark);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Header & Navigation */
+header {
+  padding: 20px 5%;
+  text-align: center;
+}
+
+.brand-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+.brand-title h1 {
+  font-size: 1.8rem;
+  letter-spacing: 1px;
+}
+
+.brand-title p {
+  font-size: 0.9rem;
+  color: #444;
+}
+
+nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+nav a {
+  background-color: var(--teal-dark);
+  color: var(--white);
+  text-decoration: none;
+  padding: 6px 18px;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+nav a:hover {
+  opacity: 0.9;
+}
+
+.search-bar {
+  padding: 5px 10px;
+  border: 1px solid #999;
+  border-radius: 4px;
+}
+
+/* Main Container */
+main {
+  flex: 1;
+  width: 90%;
+  max-width: 1000px;
+  margin: 0 auto 40px;
+}
+
+/* Hero Banner */
+.hero-banner {
+  background-color: var(--teal-dark);
+  color: var(--white);
+  padding: 25px;
+  text-align: center;
+  border-radius: 4px;
+  margin-bottom: 25px;
+}
+
+/* Product Grid */
+.section-title {
+  font-size: 1.1rem;
+  margin-bottom: 15px;
+}
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 25px;
+}
+
+.product-card {
+  background-color: var(--teal-card);
+  color: var(--white);
+  border-radius: 6px;
+  padding: 20px;
+  text-align: center;
+}
+
+.product-img-circle {
+  width: 160px;
+  height: 160px;
+  background-color: #d9d9d9;
+  border-radius: 50%;
+  margin: 0 auto 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  color: #333;
+  font-size: 0.8rem;
+}
+
+.product-card h3 {
+  font-size: 1rem;
+  margin-bottom: 4px;
+}
+
+.product-card .subtitle {
+  font-size: 0.8rem;
+  opacity: 0.9;
+  margin-bottom: 12px;
+}
+
+.meta-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  border-top: 1px solid rgba(255,255,255,0.2);
+  padding-top: 8px;
+}
+
+/* Footer */
+footer {
+  background-color: var(--teal-dark);
+  color: var(--white);
+  text-align: center;
+  padding: 12px;
+  font-size: 0.8rem;
+}
