@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TEESKOLAR - Wearing a brighter future</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- HEADER (Shared across all Figma frames) -->
+  <header>
+    <div class="brand-header" onclick="navigateTo('home')" style="cursor: pointer;">
+      <img src="images/logo.png" alt="TEESKOLAR Logo" class="brand-logo" />
+      <div class="brand-title">
+        <h1>TEESKOLAR</h1>
+        <p>Wearing a brighter future</p>
+      </div>
+    </div>
+
+    <nav>
+      <div class="nav-item">
+        <span class="nav-icon">🏠</span>
+        <button class="nav-btn active" data-page="home" onclick="navigateTo('home')">Home</button>
+      </div>
+      <div class="nav-item">
+        <span class="nav-icon">🛒</span>
+        <button class="nav-btn" data-page="shop" onclick="navigateTo('shop')">Shop</button>
+      </div>
+      <div class="nav-item">
+        <span class="nav-icon">ⓘ</span>
+        <button class="nav-btn" data-page="terms" onclick="navigateTo('terms')">About</button>
+      </div>
+      <div class="nav-item">
+        <span class="nav-icon">✉</span>
+        <button class="nav-btn" data-page="contact" onclick="navigateTo('contact')">Contact Us</button>
+      </div>
+      <div class="search-wrapper">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="searchInput" placeholder="Search..." onkeyup="handleSearch()" />
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <!-- SLIDE 1: HOME (Top-Left Figma Frame) -->
+    <section id="page-home" class="page-section active">
+      <div class="hero-wrapper">
+        <span class="star-decor star-left">★</span>
+        <div class="hero-banner">
+          <p>TEESKOLAR offers a variety of styles ranging from street to semi-casual<br>inspired by scholars, made for scholars.</p>
+        </div>
+        <span class="star-decor star-right">★</span>
+      </div>
+
+      <h2 class="left-section-title">Product For Sale</h2>
+      <div class="three-col-grid" id="homeProductGrid"></div>
+    </section>
+
+    <!-- SLIDE 2: SHOP / PRODUCT 3-COLUMN GRID (Bottom-Left Figma Frame) -->
+    <section id="page-shop" class="page-section">
+      <h2 class="center-section-title">PRODUCT</h2>
+      <div class="three-col-grid" id="shopProductGrid"></div>
+    </section>
+
+    <!-- SLIDE 3 & 4: INDIVIDUAL PRODUCT VIEW (Bottom-Middle & Bottom-Right Figma Frames) -->
+    <section id="page-detail" class="page-section">
+      <h2 class="center-section-title">PRODUCT</h2>
+      <div id="singleProductContainer"></div>
+      <div style="text-align: center; margin-top: 24px;">
+        <button class="back-link-btn" onclick="navigateTo('shop')">← Back to All Products</button>
+      </div>
+    </section>
+
+    <!-- SLIDE 5: CONTACT US (Middle-Left Figma Frame) -->
+    <section id="page-contact" class="page-section">
+      <div class="contact-header">
+        <h2>CONTACT US</h2>
+        <p>Have questions or feedback? Reach out to us by completing the form below.</p>
+      </div>
+
+      <div class="contact-layout">
+        <form id="contactForm" class="contact-form" onsubmit="handleContactSubmit(event)">
+          <h3>Send us a message</h3>
+          <small>*All fields are required</small>
+
+          <label for="contactName">Name:</label>
+          <input type="text" id="contactName" placeholder="Enter your name" required />
+
+          <label for="contactEmail">Email:</label>
+          <input type="email" id="contactEmail" placeholder="Enter your email" required />
+
+          <label for="contactSubject">Subject:</label>
+          <input type="text" id="contactSubject" placeholder="Subject" required />
+
+          <label for="contactMessage">Message:</label>
+          <textarea id="contactMessage" rows="4" placeholder="Enter your message" required></textarea>
+
+          <button type="submit" class="send-btn">SEND</button>
+        </form>
+
+        <div class="contact-info">
+          <h3>Map:</h3>
+          <div class="map-box">
+            <iframe
+              title="UP Diliman Map"
+              src="https://www.openstreetmap.org/export/embed.html?bbox=121.0600%2C14.6480%2C121.0780%2C14.6600&layer=mapnik&marker=14.6539%2C121.0685"
+              loading="lazy">
+            </iframe>
+          </div>
+
+          <div class="info-block">
+            <strong>Store Address:</strong>
+            <p>1908 Katipunan Ave. UP Diliman, Quezon City, 1101</p>
+          </div>
+
+          <div class="info-block">
+            <strong>Email:</strong>
+            <p>support@teeskolar.com</p>
+          </div>
+
+          <div class="info-block">
+            <strong>Follow Us:</strong>
+            <div class="social-row">
+              <div class="social-item"><span class="social-badge">f</span><small>@teeskolar_</small></div>
+              <div class="social-item"><span class="social-badge">◎</span><small>@teeskolar_</small></div>
+              <div class="social-item"><span class="social-badge">𝕏</span><small>@teeskolar_</small></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 6: PRIVACY POLICY (Middle-Center Figma Frame) -->
+    <section id="page-privacy" class="page-section">
+      <h2 class="center-section-title">Privacy Policy</h2>
+      <div class="two-col-legal">
+        <div class="legal-col">
+          <p><strong>1. Introduction</strong><br>
+          Welcome to TEESKOLAR. We respect your privacy and are committed to protecting it. This Privacy Policy explains what information we collect when you visit and how we use it. This policy complies with the Philippine Data Privacy Act of 2012.<br>
+          TL;DR: We only collect what we need to process your t-shirt order. We don't sell your data.</p>
+
+          <p><strong>2. What Information We Collect</strong><br>
+          a) Information you give us: When you use our contact form or order form, we collect your name, email address, contact number, shipping address, t-shirt size, and quantity.<br>
+          b) Automatic information: We collect basic data like IP address, browser type, and pages visited through cookies to improve site performance.</p>
+
+          <p><strong>3. How We Use Your Information</strong><br>
+          We use your information to:<br>
+          • Process and confirm your orders and inquiries<br>
+          • Communicate with you about your order status<br>
+          • Improve our website and products<br>
+          • Prevent fraud and ensure site security<br>
+          We do not sell, rent, or trade your personal data to third parties.</p>
+        </div>
+
+        <div class="legal-col">
+          <p><strong>4. Cookies</strong><br>
+          Our website uses cookies to remember your preferences and keep the site running smoothly. You can disable cookies in your browser settings, but some parts of the site may not work properly.</p>
+
+          <p><strong>5. How We Store Your Data</strong><br>
+          Your data is stored securely and is only accessible to the TEESKOLAR team. We retain your order information for 2 years for accounting and support purposes, after which it is securely deleted.</p>
+
+          <p><strong>6. Your Rights</strong><br>
+          You have the right to access, correct, or delete your personal data. If you wish to exercise these rights, contact us at: <strong>support@teeskolar.com</strong></p>
+
+          <p><strong>7. Security</strong><br>
+          We take reasonable measures to protect your data, but please note that no method of transmission over the internet is 100% secure.</p>
+
+          <p><strong>8. Children's Privacy</strong><br>
+          Our website is not intended for children under 13. We do not knowingly collect data from children.</p>
+
+          <p><strong>9. Changes to This Policy</strong><br>
+          We may update this policy from time to time. Changes will be posted on this page with a new "Last Updated" date.</p>
+        </div>
+      </div>
+      <div class="legal-bottom-note">
+        <p>If you have questions about this policy, email us at: <strong>support@teeskolar.com</strong></p>
+      </div>
+    </section>
+
+    <!-- SLIDE 7: TERMS OF SERVICE (Middle-Right Figma Frame) -->
+    <section id="page-terms" class="page-section">
+      <h2 class="center-section-title">Terms of Service</h2>
+      <div class="two-col-legal">
+        <div class="legal-col">
+          <p><strong>1. Agreement to Terms</strong><br>
+          By accessing and using, you agree to these Terms. If you do not agree, please do not use our website. Our store is operated by TEESKOLAR, a start-up based in the Philippines.</p>
+
+          <p><strong>2. Our Products</strong><br>
+          TEESKOLAR currently offers 3 t-shirt designs. We have made every effort to display the colors and images accurately, but actual colors may vary slightly due to screen settings. Product names and prices are final as displayed. We do not allow custom changes to t-shirt name and price on the site at this time.</p>
+
+          <p><strong>3. Orders and Ordering Process</strong><br>
+          Our website serves as an ordering form. No payment gateway is available on the site.<br>
+          a) When you place an order, you will submit a request via our order form.<br>
+          b) We will confirm your order, total amount, and payment method (GCash / Bank Transfer / COD) via email or message.<br>
+          c) We reserve the right to refuse or cancel any order for reasons including stock unavailability, pricing errors, or suspected fraud.</p>
+
+          <p><strong>4. Prices and Payment</strong><br>
+          All prices are listed in Philippine Peso (PHP) and are subject to change without notice. Payment will be arranged offline after order confirmation.</p>
+        </div>
+
+        <div class="legal-col">
+          <p><strong>5. Shipping and Delivery</strong><br>
+          Shipping fees and delivery times will be communicated upon order confirmation. We are not responsible for delays caused by courier services.</p>
+
+          <p><strong>6. Returns and Exchanges</strong><br>
+          Because we are a small start-up, all sales are final unless the item received is defective or wrong size due to our error. Please check our size chart before ordering. To request an exchange, contact us within 3 days of receiving your item.</p>
+
+          <p><strong>7. Intellectual Property</strong><br>
+          All content on this site, including the TEESKOLAR logo, brand name, designs, photos, and text, is owned by TEESKOLAR and may not be copied or used without permission. Simple Tees is no longer our brand and is not affiliated.</p>
+
+          <p><strong>8. User Conduct</strong><br>
+          You agree not to use our site for any unlawful purpose, spam, or attempt to hack or disrupt the website.</p>
+
+          <p><strong>9. Limitation of Liability</strong><br>
+          Our website is provided "as is." To the fullest extent allowed by law, TEESKOLAR will not be liable for any indirect damages arising from your use of the site or products.</p>
+
+          <p><strong>10. Governing Law</strong><br>
+          These Terms are governed by the laws of the Republic of the Philippines.</p>
+        </div>
+      </div>
+      <div class="legal-bottom-note">
+        <p>If you have questions about this terms, email us at: <strong>support@teeskolar.com</strong></p>
+      </div>
+    </section>
+  </main>
+
+  <!-- Order Request Form Modal (Opens when clicking "Order Button") -->
+  <div id="orderModal" class="modal-overlay" onclick="closeModalOnOutside(event)">
+    <div class="modal-card">
+      <button class="close-modal" onclick="closeOrderModal()">✕</button>
+      <h2>Order Request Form</h2>
+      <p id="modalSummaryText" class="modal-sub"></p>
+
+      <form id="orderForm" onsubmit="submitOrder(event)">
+        <div class="form-row">
+          <label>Select Size:</label>
+          <select id="modalSize">
+            <option value="S">S</option>
+            <option value="M" selected>M</option
