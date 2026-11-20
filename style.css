@@ -251,7 +251,7 @@ main {
   font-weight: 600;
 }
 
-/* SHOP & SINGLE PRODUCT ROW LAYOUT (Matches your Figma bottom frame) */
+/* SHOP & SINGLE PRODUCT ROW LAYOUT */
 .shop-vertical-list {
   display: flex;
   flex-direction: column;
@@ -372,7 +372,7 @@ main {
   font-size: 0.95rem;
 }
 
-/* Terms of Service (2-column layout matching Figma) */
+/* Terms of Service */
 .terms-title {
   text-align: center;
   font-size: 1.35rem;
