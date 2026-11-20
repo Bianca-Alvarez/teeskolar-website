@@ -8,64 +8,209 @@
 </head>
 <body>
 
+  <!-- Header matching Figma -->
   <header>
-    <div class="brand-header">
+    <div class="brand-header" onclick="navigateTo('home')" style="cursor: pointer;">
+      <!-- Custom SVG recreating your TEESKOLAR grad cap logo -->
+      <svg class="brand-logo" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+        <path d="M15,75 A50,50 0 0,1 105,40" fill="none" stroke="#f5b041" stroke-width="4" stroke-linecap="round"/>
+        <path d="M105,75 A50,50 0 0,1 25,95" fill="none" stroke="#f5b041" stroke-width="4" stroke-linecap="round"/>
+        <polygon points="60,32 102,48 60,64 18,48" fill="#005678"/>
+        <path d="M36,56 L36,74 C36,80 84,80 84,74 L84,56 L60,66 Z" fill="#005678"/>
+        <line x1="94" y1="51" x2="94" y2="78" stroke="#f5b041" stroke-width="3"/>
+        <circle cx="94" cy="80" r="3.5" fill="#f5b041"/>
+        <text x="16" y="55" font-size="8.5" font-weight="bold" fill="#005678" transform="rotate(-38 25,55)">TEESKOLAR</text>
+      </svg>
       <div class="brand-title">
         <h1>TEESKOLAR</h1>
         <p>Wearing a brighter future</p>
       </div>
     </div>
+
     <nav>
-      <a href="index.html">Home</a>
-      <a href="shop.html">Shop</a>
-      <a href="about.html">About</a>
-      <a href="contact.html">Contact Us</a>
-      <input type="text" class="search-bar" placeholder="Search..." />
+      <div class="nav-item">
+        <span class="nav-icon">🏠</span>
+        <button class="nav-btn active" data-page="home" onclick="navigateTo('home')">Home</button>
+      </div>
+      <div class="nav-item">
+        <span class="nav-icon">🛒</span>
+        <button class="nav-btn" data-page="shop" onclick="navigateTo('shop')">Shop</button>
+      </div>
+      <div class="nav-item">
+        <span class="nav-icon">📄</span>
+        <button class="nav-btn" data-page="privacy" onclick="navigateTo('privacy')">Privacy</button>
+      </div>
+      <div class="nav-item">
+        <span class="nav-icon">ⓘ</span>
+        <button class="nav-btn" data-page="contact" onclick="navigateTo('contact')">Contact Us</button>
+      </div>
+      <div class="search-wrapper">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="searchInput" placeholder="Search shirts..." onkeyup="filterProducts()" />
+      </div>
     </nav>
   </header>
 
   <main>
-    <section class="hero-banner">
-      <p>TEESKOLAR offers a variety of styles ranging from street to semi-casual inspired by scholars, made for scholars.</p>
+    <!-- HOME PAGE VIEW -->
+    <section id="page-home" class="page-section active">
+      <div class="hero-wrapper">
+        <span class="star-decor star-left">★</span>
+        <div class="hero-banner">
+          <p>TEESKOLAR offers a variety of styles ranging from street to semi-casual inspired by scholars, made for scholars.</p>
+        </div>
+        <span class="star-decor star-right">★</span>
+      </div>
+
+      <h2 class="section-title">Product For Sale</h2>
+      <div class="product-grid" id="homeProductGrid"></div>
     </section>
 
-    <h2 class="section-title">Product For Sale</h2>
-    <section class="product-grid">
-      <div class="product-card">
-        <div class="product-img-circle">Shirt Image 1</div>
-        <h3>Don't Be Late</h3>
-        <p class="subtitle">(Semi-Ringer Tee)</p>
-        <div class="meta-row">
-          <span>Sizes: S, M, L, XL</span>
-          <span>Price: ₱399</span>
-        </div>
+    <!-- SHOP PAGE VIEW -->
+    <section id="page-shop" class="page-section">
+      <h2 class="section-title">TEESKOLAR Catalog</h2>
+      <div class="product-grid" id="shopProductGrid"></div>
+    </section>
+
+    <!-- CONTACT US PAGE VIEW -->
+    <section id="page-contact" class="page-section">
+      <div class="contact-header">
+        <h2>CONTACT US</h2>
+        <p>Have questions or feedback? Reach out to us by completing the form below.</p>
       </div>
 
-      <div class="product-card">
-        <div class="product-img-circle">Shirt Image 2</div>
-        <h3>Everyday Comfort</h3>
-        <p class="subtitle">(Crew Neck T-Shirt)</p>
-        <div class="meta-row">
-          <span>Sizes: S, M, L, XL</span>
-          <span>Price: ₱349</span>
+      <div class="contact-layout">
+        <form id="contactForm" class="contact-form" onsubmit="handleContactSubmit(event)">
+          <h3>Send us a message</h3>
+          <small>*All fields are required</small>
+
+          <label for="contactName">Name:</label>
+          <input type="text" id="contactName" placeholder="Enter your name" required />
+
+          <label for="contactEmail">Email:</label>
+          <input type="email" id="contactEmail" placeholder="Enter your email" required />
+
+          <label for="contactSubject">Subject:</label>
+          <input type="text" id="contactSubject" placeholder="Subject" required />
+
+          <label for="contactMessage">Message:</label>
+          <textarea id="contactMessage" rows="4" placeholder="Enter your message" required></textarea>
+
+          <button type="submit" class="send-btn">SEND</button>
+          <p id="contactStatus" class="status-msg"></p>
+        </form>
+
+        <div class="contact-info">
+          <h3>Map:</h3>
+          <div class="map-box">
+            <iframe
+              title="UP Diliman Map"
+              src="https://www.openstreetmap.org/export/embed.html?bbox=121.0600%2C14.6480%2C121.0780%2C14.6600&layer=mapnik&marker=14.6539%2C121.0685"
+              loading="lazy">
+            </iframe>
+          </div>
+
+          <div class="info-block">
+            <strong>Store Address:</strong>
+            <p>1908 Katipunan Ave. UP Diliman, Quezon City, 1101</p>
+          </div>
+
+          <div class="info-block">
+            <strong>Email:</strong>
+            <p>support@teeskolar.com</p>
+          </div>
+
+          <div class="info-block">
+            <strong>Follow Us:</strong>
+            <div class="social-row">
+              <div class="social-item"><span class="social-badge">f</span><small>@teeskolar_</small></div>
+              <div class="social-item"><span class="social-badge">◎</span><small>@teeskolar_</small></div>
+              <div class="social-item"><span class="social-badge">𝕏</span><small>@teeskolar_</small></div>
+            </div>
+          </div>
         </div>
       </div>
+    </section>
 
-      <div class="product-card">
-        <div class="product-img-circle">Shirt Image 3</div>
-        <h3>Do Good Work</h3>
-        <p class="subtitle">(Baggy T-Shirt)</p>
-        <div class="meta-row">
-          <span>Sizes: S, M, L, XL</span>
-          <span>Price: ₱449</span>
-        </div>
+    <!-- PRIVACY POLICY PAGE VIEW -->
+    <section id="page-privacy" class="page-section">
+      <div class="privacy-box">
+        <h3>1. Introduction</h3>
+        <p>Welcome to TEESKOLAR. We respect your privacy and are committed to protecting it. This Privacy Policy explains what information we collect when you visit and how we use it. This policy complies with the Philippine Data Privacy Act of 2012.</p>
+        <p><strong>TL;DR:</strong> We only collect what we need to process your orders and we don't sell your data.</p>
+
+        <h3>2. What Information We Collect</h3>
+        <p><strong>a) Information you give us:</strong> When you use our order form or contact form, we collect your name, email address, contact number, delivery address, t-shirt size, and quantity.</p>
+        <p><strong>b) Automatic information:</strong> We collect basic data like IP address, browser type, and pages visited through cookies to improve site performance.</p>
+
+        <h3>3. How We Use Your Information</h3>
+        <p>We use your information to:</p>
+        <ul>
+          <li>Process and confirm your orders and inquiries</li>
+          <li>Communicate with you about your order status</li>
+          <li>Improve our website and products</li>
+          <li>Prevent fraud and ensure site security</li>
+        </ul>
+        <p>We do not sell, rent, or trade your personal data to third parties.</p>
       </div>
     </section>
   </main>
+
+  <!-- Order Modal when clicking a shirt -->
+  <div id="orderModal" class="modal-overlay" onclick="closeModalOnOutside(event)">
+    <div class="modal-card">
+      <button class="close-modal" onclick="closeOrderModal()">✕</button>
+      <h2 id="modalTitle">Shirt Name</h2>
+      <p id="modalSubtitle" class="modal-sub">(Style)</p>
+      <p id="modalDesc" class="modal-desc"></p>
+
+      <form id="orderForm" onsubmit="submitOrder(event)">
+        <div class="form-row">
+          <label>Select Size:</label>
+          <select id="orderSize">
+            <option value="S">Small (S)</option>
+            <option value="M" selected>Medium (M)</option>
+            <option value="L">Large (L)</option>
+            <option value="XL">Extra Large (XL)</option>
+          </select>
+        </div>
+
+        <div class="form-row">
+          <label>Quantity:</label>
+          <div class="qty-stepper">
+            <button type="button" onclick="changeQty(-1)">−</button>
+            <span id="orderQty">1</span>
+            <button type="button" onclick="changeQty(1)">+</button>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <label>Full Name:</label>
+          <input type="text" id="buyerName" placeholder="Juan Dela Cruz" required />
+        </div>
+
+        <div class="form-row">
+          <label>UP Email / Contact:</label>
+          <input type="text" id="buyerContact" placeholder="jdelacruz@up.edu.ph" required />
+        </div>
+
+        <div class="total-bar">
+          <span>Total Price:</span>
+          <strong id="modalTotal">₱399</strong>
+        </div>
+
+        <button type="submit" class="confirm-order-btn">Place Order</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="toast"></div>
 
   <footer>
     <p>All rights reserved. TEESKOLAR 2026.</p>
   </footer>
 
+  <script src="script.js"></script>
 </body>
 </html>
