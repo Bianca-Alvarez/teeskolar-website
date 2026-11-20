@@ -1,158 +1,620 @@
-// Product Data matching your 3 TEESKOLAR Figma shirts
-const products = [
-  {
-    id: 1,
-    name: "Don't Be Late",
-    style: "(Semi-Ringer Tee)",
-    sizes: "S, M, L, XL",
-    price: 399,
-    description: "Maroon semi-ringer tee featuring a classic coffee cup graphic for 7:00 AM lecture survivors.",
-    svg: `<svg viewBox="0 0 200 180" width="165" height="165">
-            <path d="M55,25 L75,20 Q100,32 125,20 L145,25 L175,55 L155,75 L140,60 L140,160 L60,160 L60,60 L45,75 L25,55 Z" fill="#6b2323"/>
-            <path d="M75,20 Q100,34 125,20" fill="none" stroke="#f3e5ab" stroke-width="4"/>
-            <text x="100" y="65" text-anchor="middle" fill="#f3e5ab" font-size="11" font-weight="bold">DON'T</text>
-            <text x="100" y="78" text-anchor="middle" fill="#f3e5ab" font-size="11" font-weight="bold">BE LATE</text>
-            <rect x="85" y="92" width="30" height="24" rx="4" fill="#d2a679"/>
-            <ellipse cx="100" cy="118" rx="22" ry="4" fill="#ffffff"/>
-          </svg>`
-  },
-  {
-    id: 2,
-    name: "Everyday Comfort",
-    style: "(Crew Neck T-Shirt)",
-    sizes: "S, M, L, XL",
-    price: 349,
-    description: "Soft tie-dye inspired sunset gradient crew neck made for all-day library study sessions.",
-    svg: `<svg viewBox="0 0 200 180" width="165" height="165">
-            <defs>
-              <radialGradient id="sunsetGrad" cx="50%" cy="50%" r="55%">
-                <stop offset="0%" stop-color="#ff6b6b"/>
-                <stop offset="60%" stop-color="#ffa94d"/>
-                <stop offset="100%" stop-color="#f1f3f5"/>
-              </radialGradient>
-            </defs>
-            <path d="M55,25 L75,20 Q100,32 125,20 L145,25 L175,55 L155,75 L140,60 L140,160 L60,160 L60,60 L45,75 L25,55 Z" fill="url(#sunsetGrad)"/>
-            <text x="100" y="88" text-anchor="middle" fill="#ffffff" font-size="10" font-weight="bold">EVERYDAY</text>
-            <text x="100" y="101" text-anchor="middle" fill="#ffffff" font-size="10" font-weight="bold">COMFORT</text>
-          </svg>`
-  },
-  {
-    id: 3,
-    name: "Do Good Work",
-    style: "(Baggy T-Shirt)",
-    sizes: "S, M, L, XL",
-    price: 449,
-    description: "Relaxed pastel yellow oversized tee with a cheerful mascot reminder to keep pushing forward.",
-    svg: `<svg viewBox="0 0 200 180" width="165" height="165">
-            <path d="M50,25 L75,20 Q100,32 125,20 L150,25 L182,60 L160,82 L144,65 L144,162 L56,162 L56,65 L40,82 L18,60 Z" fill="#f7e396"/>
-            <circle cx="100" cy="95" r="22" fill="#f5b041"/>
-            <text x="100" y="65" text-anchor="middle" fill="#b7791f" font-size="10" font-weight="bold">DO GOOD WORK</text>
-          </svg>`
+:root {
+  --bg-pink: #f8e2e2;
+  --teal-main: #005678;
+  --teal-dark: #00425c;
+  --gold-star: #ffde59;
+  --white: #ffffff;
+  --text-dark: #111111;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Inter, Arial, sans-serif;
+}
+
+body {
+  background-color: var(--bg-pink);
+  color: var(--text-dark);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Header */
+header {
+  padding: 18px 5% 14px;
+  max-width: 1020px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.brand-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.brand-logo {
+  width: 82px;
+  height: 82px;
+  object-fit: contain;
+}
+
+.brand-title h1 {
+  font-size: 2.2rem;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  line-height: 1.1;
+}
+
+.brand-title p {
+  font-size: 1rem;
+  color: #222;
+}
+
+/* Navigation */
+nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.nav-icon {
+  background-color: var(--teal-main);
+  color: var(--white);
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.72rem;
+}
+
+.nav-btn {
+  background-color: var(--teal-main);
+  color: var(--white);
+  border: none;
+  padding: 6px 22px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.nav-btn:hover, .nav-btn.active {
+  background-color: var(--teal-dark);
+}
+
+.search-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.search-icon {
+  background-color: var(--teal-main);
+  color: var(--white);
+  padding: 5px 8px;
+  border-radius: 4px;
+  font-size: 0.78rem;
+}
+
+.search-wrapper input {
+  padding: 5px 10px;
+  border: 1.5px solid #222;
+  border-radius: 4px;
+  background-color: var(--white);
+  width: 165px;
+}
+
+/* Main */
+main {
+  flex: 1;
+  max-width: 980px;
+  width: 92%;
+  margin: 10px auto 40px;
+}
+
+.page-section {
+  display: none;
+}
+
+.page-section.active {
+  display: block;
+}
+
+/* Hero Banner */
+.hero-wrapper {
+  position: relative;
+  margin: 12px 0 28px;
+}
+
+.hero-banner {
+  background-color: var(--teal-main);
+  color: var(--white);
+  text-align: center;
+  padding: 26px 55px;
+  font-size: 1.05rem;
+  line-height: 1.45;
+}
+
+.star-decor {
+  position: absolute;
+  color: var(--gold-star);
+  font-size: 4.2rem;
+  line-height: 1;
+  text-shadow: 2px 3px 6px rgba(0, 0, 0, 0.25);
+  user-select: none;
+}
+
+.star-left {
+  top: -16px;
+  left: -10px;
+  transform: rotate(-12deg);
+}
+
+.star-right {
+  bottom: -16px;
+  right: -10px;
+  transform: rotate(15deg);
+}
+
+/* Home Product Grid */
+.section-title {
+  font-size: 1.35rem;
+  font-weight: 800;
+  margin-bottom: 18px;
+}
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 28px;
+}
+
+.product-card-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.product-card-wrapper:hover {
+  transform: translateY(-4px);
+}
+
+.arch-card {
+  width: 100%;
+  background-color: var(--teal-main);
+  border-radius: 150px 150px 0 0;
+  padding: 18px 18px 14px;
+  text-align: center;
+  color: var(--white);
+}
+
+.arch-inner {
+  background-color: #e6e6e6;
+  border-radius: 135px 135px 0 0;
+  height: 195px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 12px;
+  overflow: hidden;
+  padding: 8px;
+}
+
+.arch-inner img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.arch-card h3 {
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.arch-card p {
+  font-size: 0.82rem;
+}
+
+.card-pills {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+  margin-top: 8px;
+}
+
+.pill {
+  flex: 1;
+  background-color: var(--teal-main);
+  color: var(--white);
+  text-align: center;
+  padding: 7px 6px;
+  border-radius: 6px;
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+/* SHOP & SINGLE PRODUCT ROW LAYOUT (Matches your Figma bottom frame) */
+.shop-vertical-list {
+  display: flex;
+  flex-direction: column;
+  gap: 35px;
+}
+
+.shop-item-row {
+  display: grid;
+  grid-template-columns: 270px 1fr;
+  gap: 36px;
+  align-items: center;
+  padding-bottom: 28px;
+  border-bottom: 1px solid rgba(0, 86, 120, 0.2);
+}
+
+@media (max-width: 720px) {
+  .shop-item-row {
+    grid-template-columns: 1fr;
   }
-];
-
-let selectedProduct = null;
-let currentQty = 1;
-
-// Render product cards into both Home and Shop grids
-function renderProducts(list) {
-  const grids = [document.getElementById("homeProductGrid"), document.getElementById("shopProductGrid")];
-
-  grids.forEach(grid => {
-    if (!grid) return;
-    grid.innerHTML = list.map(item => `
-      <div class="product-card-wrapper" onclick="openOrderModal(${item.id})">
-        <div class="arch-card">
-          <div class="arch-inner">${item.svg}</div>
-          <h3>${item.name}</h3>
-          <p>${item.style}</p>
-        </div>
-        <div class="card-pills">
-          <div class="pill">Size: ${item.sizes}</div>
-          <div class="pill">Price: ₱${item.price}</div>
-        </div>
-      </div>
-    `).join("");
-  });
 }
 
-// Navigation between Home, Shop, Privacy, and Contact Us
-function navigateTo(pageId) {
-  document.querySelectorAll(".page-section").forEach(sec => sec.classList.remove("active"));
-  document.getElementById(`page-${pageId}`).classList.add("active");
-
-  document.querySelectorAll(".nav-btn").forEach(btn => {
-    btn.classList.toggle("active", btn.dataset.page === pageId);
-  });
-  window.scrollTo({ top: 0, behavior: "smooth" });
+.shop-right-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
 }
 
-// Live Search Filter
-function filterProducts() {
-  const query = document.getElementById("searchInput").value.toLowerCase();
-  const filtered = products.filter(p =>
-    p.name.toLowerCase().includes(query) || p.style.toLowerCase().includes(query)
-  );
-  renderProducts(filtered);
+.desc-box {
+  background-color: var(--teal-main);
+  color: var(--white);
+  padding: 16px 20px;
+  font-size: 0.92rem;
+  line-height: 1.5;
+  border-radius: 2px;
 }
 
-// Interactive Order Modal
-function openOrderModal(productId) {
-  selectedProduct = products.find(p => p.id === productId);
-  currentQty = 1;
-
-  document.getElementById("modalTitle").textContent = selectedProduct.name;
-  document.getElementById("modalSubtitle").textContent = selectedProduct.style;
-  document.getElementById("modalDesc").textContent = selectedProduct.description;
-  document.getElementById("orderQty").textContent = currentQty;
-  updateModalTotal();
-
-  document.getElementById("orderModal").classList.add("open");
+.options-bar-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
 }
 
-function closeOrderModal() {
-  document.getElementById("orderModal").classList.remove("open");
+.options-teal-box {
+  flex: 1;
+  background-color: var(--teal-main);
+  color: var(--white);
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  font-size: 0.85rem;
 }
 
-function closeModalOnOutside(event) {
-  if (event.target.id === "orderModal") closeOrderModal();
+.select-group {
+  display: flex;
+  gap: 8px;
 }
 
-function changeQty(delta) {
-  currentQty = Math.max(1, currentQty + delta);
-  document.getElementById("orderQty").textContent = currentQty;
-  updateModalTotal();
+.select-group select {
+  padding: 4px 8px;
+  border-radius: 4px;
+  border: none;
+  font-weight: 600;
+  color: var(--text-dark);
 }
 
-function updateModalTotal() {
-  if (!selectedProduct) return;
-  document.getElementById("modalTotal").textContent = `₱${selectedProduct.price * currentQty}`;
+.qty-control {
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 
-function submitOrder(event) {
-  event.preventDefault();
-  const size = document.getElementById("orderSize").value;
-  const buyer = document.getElementById("buyerName").value;
-  closeOrderModal();
-  showToast(`Order placed! ${currentQty}x ${selectedProduct.name} (${size}) for ${buyer}.`);
-  document.getElementById("orderForm").reset();
+.qty-btn {
+  width: 24px;
+  height: 24px;
+  background-color: var(--teal-main);
+  color: var(--white);
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 3px;
 }
 
-// Contact Form Submission
-function handleContactSubmit(event) {
-  event.preventDefault();
-  const name = document.getElementById("contactName").value;
-  showToast(`Thank you, ${name}! Your message has been sent to TEESKOLAR.`);
-  document.getElementById("contactForm").reset();
+.qty-display {
+  background: var(--white);
+  border: 1px solid #888;
+  padding: 2px 10px;
+  font-weight: 700;
+  font-size: 0.9rem;
 }
 
-// Toast Notification Helper
-function showToast(message) {
-  const toast = document.getElementById("toast");
-  toast.textContent = message;
-  toast.classList.add("show");
-  setTimeout(() => toast.classList.remove("show"), 4000);
+.order-action-btn {
+  align-self: center;
+  background-color: var(--teal-main);
+  color: var(--white);
+  border: none;
+  padding: 10px 44px;
+  border-radius: 6px;
+  font-size: 0.92rem;
+  font-weight: 700;
+  cursor: pointer;
 }
 
-// Initialize products on load
-renderProducts(products);
+.order-action-btn:hover {
+  background-color: var(--teal-dark);
+}
+
+.back-btn {
+  background: none;
+  border: none;
+  color: var(--teal-main);
+  font-weight: 700;
+  cursor: pointer;
+  margin-bottom: 16px;
+  font-size: 0.95rem;
+}
+
+/* Terms of Service (2-column layout matching Figma) */
+.terms-title {
+  text-align: center;
+  font-size: 1.35rem;
+  margin-bottom: 18px;
+}
+
+.terms-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+  font-size: 0.78rem;
+  line-height: 1.48;
+}
+
+@media (max-width: 720px) {
+  .terms-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.terms-col p {
+  margin-bottom: 10px;
+}
+
+.terms-footer-links {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 0.85rem;
+}
+
+.link-btn {
+  margin-top: 8px;
+  background-color: var(--teal-main);
+  color: var(--white);
+  border: none;
+  padding: 6px 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.8rem;
+}
+
+/* Privacy Policy */
+.privacy-box {
+  max-width: 760px;
+  margin: 0 auto;
+  font-size: 0.9rem;
+  line-height: 1.55;
+}
+
+.privacy-box h3 {
+  margin: 14px 0 6px;
+}
+
+.privacy-box ul {
+  margin-left: 22px;
+  margin-bottom: 10px;
+}
+
+/* Contact Page */
+.contact-header {
+  text-align: center;
+  margin-bottom: 22px;
+}
+
+.contact-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 35px;
+}
+
+@media (max-width: 720px) {
+  .contact-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.contact-form label {
+  font-size: 0.85rem;
+  font-weight: 700;
+  margin: 8px 0 4px;
+}
+
+.contact-form input, .contact-form textarea {
+  padding: 8px;
+  border: 1px solid #bbb;
+  border-radius: 4px;
+  background: var(--white);
+}
+
+.send-btn {
+  margin-top: 12px;
+  width: 90px;
+  padding: 7px;
+  background-color: var(--teal-main);
+  color: var(--white);
+  border: none;
+  border-radius: 4px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.map-box {
+  width: 100%;
+  height: 165px;
+  border: 1px solid #bbb;
+  margin: 8px 0 14px;
+}
+
+.map-box iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+.info-block {
+  margin-bottom: 12px;
+  font-size: 0.9rem;
+}
+
+.social-row {
+  display: flex;
+  gap: 18px;
+  margin-top: 6px;
+}
+
+.social-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.social-badge {
+  background: #111;
+  color: var(--white);
+  width: 28px;
+  height: 28px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+/* Modal */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-overlay.open {
+  display: flex;
+}
+
+.modal-card {
+  background: var(--white);
+  padding: 24px;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 410px;
+  position: relative;
+  border-top: 8px solid var(--teal-main);
+}
+
+.close-modal {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.modal-sub {
+  color: var(--teal-main);
+  font-weight: 700;
+  margin: 6px 0 14px;
+  font-size: 0.9rem;
+}
+
+.form-row {
+  margin-bottom: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.form-row input, .form-row select {
+  padding: 8px;
+  border: 1px solid #bbb;
+  border-radius: 5px;
+}
+
+.confirm-order-btn {
+  width: 100%;
+  padding: 10px;
+  background: var(--teal-main);
+  color: var(--white);
+  border: none;
+  border-radius: 6px;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 6px;
+}
+
+/* Toast & Footer */
+.toast {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background: var(--teal-dark);
+  color: var(--white);
+  padding: 12px 20px;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+  z-index: 2000;
+}
+
+.toast.show {
+  opacity: 1;
+}
+
+footer {
+  background-color: var(--teal-main);
+  color: var(--gold-star);
+  text-align: center;
+  padding: 10px;
+  font-size: 0.82rem;
+}
