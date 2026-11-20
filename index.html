@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>TEESKOLAR - Wearing a brighter future</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="teesko.css" />
 </head>
 <body>
 
@@ -57,18 +57,18 @@
       <div class="product-grid" id="homeProductGrid"></div>
     </section>
 
-    <!-- 2. SHOP PAGE VIEW (Vertical list matching Figma Shop wireframe) -->
+    <!-- 2. SHOP PAGE VIEW -->
     <section id="page-shop" class="page-section">
       <div id="shopVerticalList" class="shop-vertical-list"></div>
     </section>
 
-    <!-- 3. SINGLE PRODUCT DETAIL VIEW (Matches bottom Figma frame) -->
+    <!-- 3. SINGLE PRODUCT DETAIL VIEW -->
     <section id="page-detail" class="page-section">
       <button class="back-btn" onclick="navigateTo('home')">← Back to Home</button>
       <div id="singleProductContainer"></div>
     </section>
 
-    <!-- 4. ABOUT / TERMS OF SERVICE VIEW (Matches top Figma frame) -->
+    <!-- 4. ABOUT / TERMS OF SERVICE VIEW -->
     <section id="page-terms" class="page-section">
       <h2 class="terms-title">Terms of Service</h2>
       <div class="terms-grid">
@@ -199,7 +199,7 @@
     </section>
   </main>
 
-  <!-- Order Request Modal (Triggered when clicking Order Button) -->
+  <!-- Order Request Modal (Revised Fields) -->
   <div id="orderModal" class="modal-overlay" onclick="closeModalOnOutside(event)">
     <div class="modal-card">
       <button class="close-modal" onclick="closeOrderModal()">✕</button>
@@ -208,27 +208,23 @@
 
       <form id="orderForm" onsubmit="submitOrder(event)">
         <div class="form-row">
-          <label>Full Name:</label>
+          <label for="buyerName">Full Name:</label>
           <input type="text" id="buyerName" placeholder="Juan Dela Cruz" required />
         </div>
 
         <div class="form-row">
-          <label>UP Email / Contact Number:</label>
-          <input type="text" id="buyerContact" placeholder="jdelacruz@up.edu.ph / 0917..." required />
+          <label for="buyerEmail">Email:</label>
+          <input type="email" id="buyerEmail" placeholder="jdelacruz@up.edu.ph" required />
         </div>
 
         <div class="form-row">
-          <label>Delivery Address / Meet-up Spot:</label>
+          <label for="buyerAddress">Delivery Address:</label>
           <input type="text" id="buyerAddress" placeholder="e.g., Palma Hall / Area 2, UP Diliman" required />
         </div>
 
         <div class="form-row">
-          <label>Preferred Payment Method:</label>
-          <select id="paymentMethod">
-            <option value="GCash">GCash</option>
-            <option value="Bank Transfer">Bank Transfer</option>
-            <option value="Cash on Delivery (COD)">Cash on Delivery (COD)</option>
-          </select>
+          <label for="buyerPhone">Contact Number:</label>
+          <input type="tel" id="buyerPhone" placeholder="0917 123 4567" required />
         </div>
 
         <button type="submit" class="confirm-order-btn">Submit Order Request</button>
@@ -243,6 +239,6 @@
     <p>All rights reserved. TEESKOLAR 2026.</p>
   </footer>
 
-  <script src="script.js"></script>
+  <script src="teesko.js"></script>
 </body>
 </html>
